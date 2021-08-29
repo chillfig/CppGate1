@@ -1,0 +1,13 @@
+Requirements for Gate #1:
+	1. Print out a welcome message or title line. For example, “Justin’s Sudoku Puzzle Program”.
+	2. The main loop of the program will print out a list of options for the user to choose from, and prompt them for their response. This will include:
+	3. a. Input a Sudoku puzzle from the keyboard
+	4. b. Exit the program
+
+	1. Read in a Sudoku puzzle from the keyboard by letting the user input a series of 81 numbers that form the puzzle.
+	2. a. Prompt the user for each cell of the puzzle, each number should be a single digit 0-9. Zero represents a blank or missing number.
+	3. b. Store the puzzle in a 2-dimensional array.
+	4. c. Validate the puzzle by checking that each row, column, and box contains only one of each number 1-9 and zeros (0).
+	5. d. If the puzzle is invalid print a message saying, “invalid puzzle”.
+	6. e. If the puzzle is valid print the puzzle to the screen
+	7. Inputting the puzzle, Validating the puzzle, and Printing the puzzle should each be a separate function. 
