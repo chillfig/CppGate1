@@ -15,22 +15,25 @@ int main()
     {
         cout << "Enter \"a\" to input a Sudoko puzzle from the keyboard" << "\n"
                 "Enter \"b\" to exit the program" << "\n\n";
-
         cin >> choice;
 
         if(choice == 'a'){
             puzzle newPuzzle;                       // create a puzzle object
+            
+            if(newPuzzle.validity < 1){
+                cout << "Invalid puzzle\n";
+            }else{
+                newPuzzle.printPuzzle(newPuzzle.numMatrix);
+            }
+            
             vectorOfPuzzles.push_back(newPuzzle);   // adds and stores new puzzle object
-        } else if (choice == 'b')
-        {
+        } else if (choice == 'b'){
             cout << "Exiting...\n";
             break;
         } else{
             cout << "Invalid input. Try again\n\n";
             continue;
         }
-
     }
-    
     return 0;
 }
