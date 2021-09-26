@@ -12,14 +12,15 @@ class puzzle{
                                                 // 0 if the puzzle contains repeated values
                                                 // 1 if the puzzle is valid
         
-        puzzle(char choice){   // constructor that executes at object creation
+        puzzle(){   // constructor that executes at object creation
             // if (choice == 'a'){
             //     acceptInput(numMatrix);
             // }
             // else{
             //     fileParse(numMatrix);
             // }
-            fileParse(numMatrix);
+            //fileParse(numMatrix);
+            acceptInput(numMatrix);
             validity = validatePuzzle(numMatrix);
         }
 
