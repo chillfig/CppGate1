@@ -7,7 +7,7 @@ using namespace std;
 int main()
 {
     char choice;                        // character indicating the user's choice to end the program
-    vector<puzzle> vectorOfPuzzles;     // vector of Sudoko puzzles.
+    vector<puzzle> vectorOfPuzzles;     // vector of Sudoko puzzles
 
     cout << "Justin's Sudoku Puzzle Program" << "\n\n";
 
