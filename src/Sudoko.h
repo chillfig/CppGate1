@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <iostream>
 #include <fstream>
 #include <set>
@@ -9,6 +10,7 @@ using namespace std;
 class puzzle{
     public:
         int numMatrix[puzzleDim][puzzleDim];    // puzzle matrix
+        int fileStat = 0;                       // 0 if filestream is valid, 1 if error
         int validity;                           // -1 if the puzzle contains an invalid value 
                                                 // 0 if the puzzle contains repeated values
                                                 // 1 if the puzzle is valid
@@ -19,25 +21,26 @@ class puzzle{
                 acceptInput(numMatrix);
             }
             else if(choice == "file"){
-                fileParse(numMatrix);
+                fileStat = fileParse(numMatrix);
             }
-            
-            // communicate validity to user
-            validity = validatePuzzle(numMatrix);
-            switch (validity)
-            {
-            case 1:
-                printPuzzle(numMatrix);
-                break;
-            case 0:
-                cout << "The given puzzle contains repeated values\n\n";
-                break;
-            case -1:
-                cout << "The given puzzle contains an invalid value\n\n";
-                break;    
-            default:
-                cout << "Error\n";
-                break;
+         
+            // communicate validity of puzzle to user 
+            if (fileStat == 0){
+                validity = validatePuzzle(numMatrix);
+                switch (validity){
+                case 1:
+                    printPuzzle(numMatrix);
+                    break;
+                case 0:
+                    cout << "The given puzzle contains repeated values\n\n";
+                    break;
+                case -1:
+                    cout << "The given puzzle contains an invalid value\n\n";
+                    break;    
+                default:
+                    cout << "Error\n";
+                    break;
+                }
             }
         }
 
@@ -134,7 +137,7 @@ class puzzle{
             fstream input_file(filename);
             if (!input_file.is_open()){
                 cerr << "Could not open the file - '"
-                     << filename << "'" << endl;
+                     << filename << "'\n" << endl;
                 return EXIT_FAILURE;
             }
             // Load the puzzle array
@@ -151,5 +154,18 @@ class puzzle{
             cout << endl;
             input_file.close();
             return EXIT_SUCCESS;
+        }
+
+        // Function that saves puzzle to file
+        void fileSave(int (&puzzleArray)[puzzleDim][puzzleDim], ofstream &inputFile){
+            inputFile.open("key_input.txt");
+            for (int i = 0; i < puzzleDim; i++){
+                for (int j = 0; j < puzzleDim; j++){
+                    inputFile << puzzleArray[i][j] << " ";
+                }
+                inputFile << "\n";
+            }
+            inputFile << "\n";
+            inputFile.close();
         }
 };
