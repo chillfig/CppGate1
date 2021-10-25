@@ -1,6 +1,8 @@
+#include <stdlib.h>
 #include <iostream>
 #include <fstream>
 #include <set>
+#include <string>
 const int puzzleDim = 9;    // [puzzleDim x puzzleDim] puzzle dimension
 
 using namespace std;
@@ -8,20 +10,38 @@ using namespace std;
 class puzzle{
     public:
         int numMatrix[puzzleDim][puzzleDim];    // puzzle matrix
+        int fileStat = 0;                       // 0 if filestream is valid, 1 if error
         int validity;                           // -1 if the puzzle contains an invalid value 
                                                 // 0 if the puzzle contains repeated values
                                                 // 1 if the puzzle is valid
         
-        puzzle(){   // constructor that executes at object creation
-            // if (choice == 'a'){
-            //     acceptInput(numMatrix);
-            // }
-            // else{
-            //     fileParse(numMatrix);
-            // }
-            //fileParse(numMatrix);
-            acceptInput(numMatrix);
-            validity = validatePuzzle(numMatrix);
+        puzzle(string choice){   // constructor that executes at object creation
+            // capture puzzle from user
+            if (choice == "keyboard"){
+                acceptInput(numMatrix);
+            }
+            else if(choice == "file"){
+                fileStat = fileParse(numMatrix);
+            }
+         
+            // communicate validity of puzzle to user 
+            if (fileStat == 0){
+                validity = validatePuzzle(numMatrix);
+                switch (validity){
+                case 1:
+                    printPuzzle(numMatrix);
+                    break;
+                case 0:
+                    cout << "The given puzzle contains repeated values\n\n";
+                    break;
+                case -1:
+                    cout << "The given puzzle contains an invalid value\n\n";
+                    break;    
+                default:
+                    cout << "Error\n";
+                    break;
+                }
+            }
         }
 
         // Function that accepts the array as reference and modifies it according to user's input.
@@ -75,8 +95,8 @@ class puzzle{
             }
             s.clear(); 
             // check each 3x3 box for duplicates
-            for(int iBox = 0; iBox < 9; iBox += 3){
-                for(int jBox = 0; jBox < 9; jBox += 3){
+            for(int iBox = 0; iBox < puzzleDim; iBox += 3){
+                for(int jBox = 0; jBox < puzzleDim; jBox += 3){
                     for(int i = iBox; i < iBox + 3; i++){
                         for(int j = jBox; j < jBox + 3; j++){
                             if(puzzleArray[i][j] != 0){
@@ -105,15 +125,19 @@ class puzzle{
 
         // Function that parses tokens from file and populates numMatrix 
         int fileParse(int (&puzzleArray)[puzzleDim][puzzleDim]){
+            string filename;
             int number;
             int i = 0;
             int j = 0;
+            // Obtain file name from user
+            cout << "Enter the filename: ";
+            cin >> filename;
+            
             // File handling
-            string filename("puzzle.txt");
             fstream input_file(filename);
             if (!input_file.is_open()){
                 cerr << "Could not open the file - '"
-                     << filename << "'" << endl;
+                     << filename << "'\n" << endl;
                 return EXIT_FAILURE;
             }
             // Load the puzzle array
@@ -130,5 +154,18 @@ class puzzle{
             cout << endl;
             input_file.close();
             return EXIT_SUCCESS;
+        }
+
+        // Function that saves puzzle to file
+        void fileSave(int (&puzzleArray)[puzzleDim][puzzleDim], ofstream &inputFile){
+            inputFile.open("key_input.txt");
+            for (int i = 0; i < puzzleDim; i++){
+                for (int j = 0; j < puzzleDim; j++){
+                    inputFile << puzzleArray[i][j] << " ";
+                }
+                inputFile << "\n";
+            }
+            inputFile << "\n";
+            inputFile.close();
         }
 };
