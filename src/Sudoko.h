@@ -13,13 +13,6 @@ class puzzle{
                                                 // 1 if the puzzle is valid
         
         puzzle(){   // constructor that executes at object creation
-            // if (choice == 'a'){
-            //     acceptInput(numMatrix);
-            // }
-            // else{
-            //     fileParse(numMatrix);
-            // }
-            //fileParse(numMatrix);
             acceptInput(numMatrix);
             validity = validatePuzzle(numMatrix);
         }
