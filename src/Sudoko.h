@@ -157,15 +157,22 @@ class puzzle{
         }
 
         // Function that saves puzzle to file
-        void fileSave(int (&puzzleArray)[puzzleDim][puzzleDim], ofstream &inputFile){
-            inputFile.open("key_input.txt");
+        void fileSave(int (&puzzleArray)[puzzleDim][puzzleDim]){
+            string filename;
+            ofstream output_file;
+
+            // Obtain file name from user
+            cout << "Enter the filename to save to: ";
+            cin >> filename;
+
+            // Store the puzzle array
+            output_file.open(filename.append(".txt"));
             for (int i = 0; i < puzzleDim; i++){
                 for (int j = 0; j < puzzleDim; j++){
-                    inputFile << puzzleArray[i][j] << " ";
+                    output_file << puzzleArray[i][j] << " ";
                 }
-                inputFile << "\n";
+                output_file << "\n";
             }
-            inputFile << "\n";
-            inputFile.close();
+            output_file.close();
         }
 };

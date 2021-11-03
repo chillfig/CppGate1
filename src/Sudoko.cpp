@@ -6,7 +6,6 @@ using namespace std;
 
 int main()
 {
-    ofstream inputFile;
     string choice;                                            // string indicating user's choice
     string saveToFile;
     cout << "Justin's Sudoku Puzzle Program" << "\n\n";
@@ -25,11 +24,10 @@ int main()
                 cin >> saveToFile;
                 cout << "\n";
                 if (saveToFile == "save"){
-                    cout << "\nEnter the name of the file you want to save to:\n";
-                    newPuzzle.fileSave(newPuzzle.numMatrix, inputFile);
+                    newPuzzle.fileSave(newPuzzle.numMatrix);
                 }
             }
-        } else if (choice == "file"){
+        } else if (choice == "file"){ 
             puzzle newPuzzle(choice);                       // create a puzzle object from file    
         } else if (choice == "exit"){
             cout << "Exiting...\n";
