@@ -6,15 +6,9 @@ using namespace std;
 
 int main()
 {
-<<<<<<< HEAD
-    char choice;                        // character indicating the user's choice to end the program
-    vector<puzzle> vectorOfPuzzles;     // vector of Sudoko puzzles
-
-=======
     ofstream inputFile;
     string choice;                                            // string indicating user's choice
     string saveToFile;
->>>>>>> 1b
     cout << "Justin's Sudoku Puzzle Program" << "\n\n";
     while (true)
     {
@@ -31,6 +25,7 @@ int main()
                 cin >> saveToFile;
                 cout << "\n";
                 if (saveToFile == "save"){
+                    cout << "\nEnter the name of the file you want to save to:\n";
                     newPuzzle.fileSave(newPuzzle.numMatrix, inputFile);
                 }
             }
