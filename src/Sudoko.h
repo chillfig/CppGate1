@@ -29,7 +29,11 @@ class puzzle{
                 validity = validatePuzzle(numMatrix);
                 switch (validity){
                 case 1:
-                    printPuzzle(numMatrix);
+                    if (solvePuzzle(numMatrix, 0, 0)){
+                        printPuzzle(numMatrix);
+                    }else{
+                        cout << "The given puzzle can't be solved\n\n";
+                    }
                     break;
                 case 0:
                     cout << "The given puzzle contains repeated values\n\n";
@@ -174,5 +178,59 @@ class puzzle{
                 output_file << "\n";
             }
             output_file.close();
+        }
+
+        // Function that solves the puzzle
+        bool solvePuzzle(int (&puzzleArray)[puzzleDim][puzzleDim], int row, int col){
+            // https://www.geeksforgeeks.org/sudoku-backtracking-7/
+            // Check if we have reached the 8th
+            // row and 9th column (0
+            // indexed matrix) , we are
+            // returning true to avoid
+            // further backtracking
+            if (row == puzzleDim - 1 && col == puzzleDim)
+                return true;
+            // Check if column value  becomes 9 ,
+            // we move to next row and
+            //  column start from 0
+            if (col == puzzleDim) {
+                row++;
+                col = 0;
+            }
+            // Check if the current position of
+            // the grid already contains
+            // value >0, we iterate for next column
+            if (puzzleArray[row][col] > 0)
+                return solvePuzzle(puzzleArray, row, col + 1);
+        
+            for (int num = 1; num <= puzzleDim; num++)
+            {
+                puzzleArray[row][col] = num;
+                // Check if it is safe to place
+                // the num (1-9)  in the
+                // given row ,col  ->we
+                // move to next column
+                if (validatePuzzle(puzzleArray))
+                {
+                    /* Assigning the num in
+                    the current (row,col)
+                    position of the grid
+                    and assuming our assigned
+                    num in the position
+                    is correct     */
+                    
+                    //  Checking for next possibility with next
+                    //  column
+                    if (solvePuzzle(puzzleArray, row, col + 1))
+                        return true;
+                }
+                // Removing the assigned num ,
+                // since our assumption
+                // was wrong , and we go for
+                // next assumption with
+                // diff num value
+                puzzleArray[row][col] = 0;
+            }
+            return false;
         }
 };
