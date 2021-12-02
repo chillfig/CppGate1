@@ -1,0 +1,18 @@
+Requirements for Gate #1b: 
+ 
+Add an option to the main loop of the program to Read a Sudoku puzzle from a file. 
+This new method should do the following:
+a. Prompt the user for the name of the file to read the puzzle from.
+b. Use your existing method to validate the puzzle 
+c. If the puzzle is invalid print a message saying, “Puzzle xxx is invalid”, where xxx is the name of the file.
+d. If the puzzle is valid print the puzzle to the screen.
+ 
+Add the following if a puzzle inputted from the keyboard is valid:
+a. Prompt the user for a file name to save it to. Have an option for them to NOT save the file.
+b. Save the puzzle to the file that the user inputted.
+ 
+When you demonstrate your program have at least 4 "test" sudoko puzzle files:
+	1. a valid puzzle
+	2. an invalid puzzle which violates the row requirement
+	3. an invalid puzzle which violates the column requirement
+an invalid puzzle which violates the box requirement.
