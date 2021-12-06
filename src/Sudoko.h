@@ -182,53 +182,29 @@ class puzzle{
 
         // Function that solves the puzzle
         bool solvePuzzle(int (&puzzleArray)[puzzleDim][puzzleDim], int row, int col){
-            // https://www.geeksforgeeks.org/sudoku-backtracking-7/
-            // Check if we have reached the 8th
-            // row and 9th column (0
-            // indexed matrix) , we are
-            // returning true to avoid
-            // further backtracking
+            // If we are indexed at the 8th row, 9th column, return true
             if (row == puzzleDim - 1 && col == puzzleDim)
                 return true;
-            // Check if column value  becomes 9 ,
-            // we move to next row and
-            //  column start from 0
+            // If we are indexed at the end of a row, then increment row, restart col
             if (col == puzzleDim) {
                 row++;
                 col = 0;
             }
-            // Check if the current position of
-            // the grid already contains
-            // value >0, we iterate for next column
+            // if nonzero element at index, recursively solve with next element. No need to fill
             if (puzzleArray[row][col] > 0)
                 return solvePuzzle(puzzleArray, row, col + 1);
         
             for (int num = 1; num <= puzzleDim; num++)
             {
                 puzzleArray[row][col] = num;
-                // Check if it is safe to place
-                // the num (1-9)  in the
-                // given row ,col  ->we
-                // move to next column
+                // check if current guess, passess validation
                 if (validatePuzzle(puzzleArray))
                 {
-                    /* Assigning the num in
-                    the current (row,col)
-                    position of the grid
-                    and assuming our assigned
-                    num in the position
-                    is correct     */
-                    
-                    //  Checking for next possibility with next
-                    //  column
+                    // use the guess at curent elemtn and recursively solve with next element
                     if (solvePuzzle(puzzleArray, row, col + 1))
                         return true;
                 }
-                // Removing the assigned num ,
-                // since our assumption
-                // was wrong , and we go for
-                // next assumption with
-                // diff num value
+                // our guess is wrong, reset value at current index to 0 and try new value
                 puzzleArray[row][col] = 0;
             }
             return false;
