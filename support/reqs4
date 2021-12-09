@@ -1,0 +1,16 @@
+Create a Sudoku Puzzle. Add this option to your main menu list.
+
+0. Start with a blank puzzle, every cell of the matrix is set to zero.
+1. Fill the 3 diagonal 3x3 boxes of the puzzle randomly.
+    o   For each cell in the upper left box, choose one of the numbers, 1-9 using a random number generator. Put this number in the first (upper left) cell of the box.
+    o   Then choose one of the remaining 8 numbers randomly and put it in the second (upper middle) cell of the box. Continue until all 9 cells of this box are filled.
+    o   Then repeat this process for the center and lower right boxes of the puzzle.
+2. Fill in the rest of the puzzle recursively.
+    o   Use your “Solve Sudoku” function to fill in every remaining “empty” cell of the puzzle.
+    o   Print out the “solved” puzzle.
+3. Now remove some number of elements randomly in order to create a proper puzzle.
+    o   Using an enumerated type, similarly to what you did in your C project, have the user select a puzzle difficulty: easy, medium, hard.
+    o   Each difficulty corresponds to a number of cells to “remove” (set to zero), easy=15, med=30, hard=45.
+    o   Using a random number generator, select one of the 81 cells of the puzzle and set its value to zero. Repeat this process until the required number of cells are blank.
+    o   Print out the final Sudoku Puzzle.
+    o   Save the final Sudoku Puzzle to a file.
