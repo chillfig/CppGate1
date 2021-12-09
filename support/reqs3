@@ -1,0 +1,8 @@
+Create a Solve Sudoku function/method. 
+ 
+This will be a recursive function that will try to solve a sudoku function by replacing every zero (0) in a sudoku puzzle with all possible values (1-9) until every zero has been replaced or all possible values have been tried without a solution. 
+Programing Hint: you can use your isvalid function each time you replace a zero with a possible value to check to see if it works. 
+ 
+This function should be called after either reading in a sudoku puzzle from a file or inputting a sudoku puzzle from the keyboard. 
+If the puzzle is solvable, print out the solved puzzle. 
+If it is not solvable, print out a massage saying this puzzle cannot be solved. 
