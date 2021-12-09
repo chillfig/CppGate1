@@ -29,7 +29,9 @@ class puzzle{
                 validity = validatePuzzle(numMatrix);
                 switch (validity){
                 case 1:
+                    printPuzzle(numMatrix);
                     if (solvePuzzle(numMatrix, 0, 0)){
+                        cout << "\nThe solved puzzle is:\n";
                         printPuzzle(numMatrix);
                     }else{
                         cout << "The given puzzle can't be solved\n\n";
@@ -47,6 +49,9 @@ class puzzle{
                 }
             }
         }
+        ~puzzle(){  // destructor to prevent memory leaks
+            cout << "\n\nPuzzle object destroyed. Memory leak prevented\n\n";
+        } 
 
         // Function that accepts the array as reference and modifies it according to user's input.
         void acceptInput(int (&puzzleArray)[puzzleDim][puzzleDim]){
@@ -182,7 +187,7 @@ class puzzle{
 
         // Function that solves the puzzle
         bool solvePuzzle(int (&puzzleArray)[puzzleDim][puzzleDim], int row, int col){
-            // If we are indexed at the 8th row, 9th column, return true
+            // If we are indexed at the end, return true, no more backtracking needed
             if (row == puzzleDim - 1 && col == puzzleDim)
                 return true;
             // If we are indexed at the end of a row, then increment row, restart col
@@ -194,19 +199,20 @@ class puzzle{
             if (puzzleArray[row][col] > 0)
                 return solvePuzzle(puzzleArray, row, col + 1);
         
-            for (int num = 1; num <= puzzleDim; num++)
+            for (int num = 1; num <= 9; num++)
             {
                 puzzleArray[row][col] = num;
                 // check if current guess, passess validation
                 if (validatePuzzle(puzzleArray))
                 {
-                    // use the guess at curent elemtn and recursively solve with next element
+                    // use the guess at curent elemnt and recursively solve with next element
                     if (solvePuzzle(puzzleArray, row, col + 1))
                         return true;
                 }
                 // our guess is wrong, reset value at current index to 0 and try new value
                 puzzleArray[row][col] = 0;
             }
+            // back track if nothing works
             return false;
         }
 };
