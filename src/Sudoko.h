@@ -14,7 +14,8 @@ class puzzle{
         int validity;                           // -1 if the puzzle contains an invalid value 
                                                 // 0 if the puzzle contains repeated values
                                                 // 1 if the puzzle is valid
-        
+        string saveToFile;                      // "save" if user wants to save their input
+
         puzzle(string choice){   // constructor that executes at object creation
             // capture puzzle from user
             if (choice == "keyboard"){
@@ -30,6 +31,17 @@ class puzzle{
                 switch (validity){
                 case 1:
                     printPuzzle(numMatrix);
+                    // If keyboard-entered puzzle, then give option to save
+                    if (choice == "keyboard"){
+                        cout << "\nEnter \"save\" to save your puzzle to a file. "
+                        "Otherwise, enter anything else to continue:\n";
+                        cin >> saveToFile;
+                        cout << "\n";
+                        if (saveToFile == "save"){
+                            fileSave(numMatrix);
+                        }
+                    }
+                    // Attempt to solve the valid puzzle
                     if (solvePuzzle(numMatrix, 0, 0)){
                         cout << "\nThe solved puzzle is:\n";
                         printPuzzle(numMatrix);
