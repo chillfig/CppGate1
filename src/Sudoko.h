@@ -217,7 +217,7 @@ class puzzle{
                 // check if current guess, passess validation
                 if (validatePuzzle(puzzleArray))
                 {
-                    // use the guess at curent elemnt and recursively solve with next element
+                    // use the guess at curent element and recursively solve with next element
                     if (solvePuzzle(puzzleArray, row, col + 1))
                         return true;
                 }
