@@ -200,19 +200,19 @@ class puzzle{
         // Function that solves the puzzle
         bool solvePuzzle(int (&puzzleArray)[puzzleDim][puzzleDim], int row, int col){
             // If we are indexed at the end, return true, no more backtracking needed
-            if (row == puzzleDim - 1 && col == puzzleDim)
+            if (row == puzzleDim - 1 && col == puzzleDim){
                 return true;
+            }
             // If we are indexed at the end of a row, then increment row, restart col
-            if (col == puzzleDim) {
+            if (col == puzzleDim){
                 row++;
                 col = 0;
             }
             // if nonzero element at index, recursively solve with next element. No need to fill
-            if (puzzleArray[row][col] > 0)
+            if (puzzleArray[row][col] > 0) {
                 return solvePuzzle(puzzleArray, row, col + 1);
-        
-            for (int num = 1; num <= 9; num++)
-            {
+            }
+            for (int num = 1; num <= 9; num++){
                 puzzleArray[row][col] = num;
                 // check if current guess, passess validation
                 if (validatePuzzle(puzzleArray))
