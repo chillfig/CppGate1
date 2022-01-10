@@ -9,45 +9,16 @@ using namespace std;
 
 class puzzle{
     public:
-        int numMatrix[puzzleDim][puzzleDim];    // puzzle matrix
-        int fileStat = 0;                       // 0 if filestream is valid, 1 if error
-        int validity;                           // -1 if the puzzle contains an invalid value 
-                                                // 0 if the puzzle contains repeated values
-                                                // 1 if the puzzle is valid
+        int numMatrix[puzzleDim][puzzleDim];                // puzzle matrix
+        int fileStat;                                       // 0 if filestream is valid, 1 if error
+        int validity;                                       // -1 if the puzzle contains an invalid value 
+                                                            // 0 if the puzzle contains repeated values
+                                                            // 1 if the puzzle is valid
+        enum difficultyEnum{EASY = 15, mid = 30, hard = 45};
         
         puzzle(string choice){   // constructor that executes at object creation
-            // capture puzzle from user
-            if (choice == "keyboard"){
-                acceptInput(numMatrix);
-            }
-            else if(choice == "file"){
-                fileStat = fileParse(numMatrix);
-            }
-         
-            // communicate validity of puzzle to user 
-            if (fileStat == 0){
-                validity = validatePuzzle(numMatrix);
-                switch (validity){
-                case 1:
-                    printPuzzle(numMatrix);
-                    if (solvePuzzle(numMatrix, 0, 0)){
-                        cout << "\nThe solved puzzle is:\n";
-                        printPuzzle(numMatrix);
-                    }else{
-                        cout << "The given puzzle can't be solved\n\n";
-                    }
-                    break;
-                case 0:
-                    cout << "The given puzzle contains repeated values\n\n";
-                    break;
-                case -1:
-                    cout << "The given puzzle contains an invalid value\n\n";
-                    break;    
-                default:
-                    cout << "Error\n";
-                    break;
-                }
-            }
+            cout << "\nPuzzle object created.\n" << endl;
+            fileStat = 0;
         }
         ~puzzle(){  // destructor to prevent memory leaks
             cout << "\n\nPuzzle object destroyed. Memory leak prevented\n\n";
@@ -65,7 +36,7 @@ class puzzle{
         }
         
         // Function that accepts the array and performs data cleaning. If data is valid, call printPuzzle.
-        int validatePuzzle(int (&puzzleArray)[puzzleDim][puzzleDim]){
+        inline int validatePuzzle(int (&puzzleArray)[puzzleDim][puzzleDim]){
             set<int> s; // unique set of integers
 
             // check that all values are 0-9 
@@ -186,26 +157,26 @@ class puzzle{
         }
 
         // Function that solves the puzzle
-        bool solvePuzzle(int (&puzzleArray)[puzzleDim][puzzleDim], int row, int col){
+        inline bool solvePuzzle(int (&puzzleArray)[puzzleDim][puzzleDim], int row, int col){
             // If we are indexed at the end, return true, no more backtracking needed
-            if (row == puzzleDim - 1 && col == puzzleDim)
+            if (row == puzzleDim - 1 && col == puzzleDim){
                 return true;
+            }
             // If we are indexed at the end of a row, then increment row, restart col
-            if (col == puzzleDim) {
+            if (col == puzzleDim){
                 row++;
                 col = 0;
             }
             // if nonzero element at index, recursively solve with next element. No need to fill
-            if (puzzleArray[row][col] > 0)
+            if (puzzleArray[row][col] > 0) {
                 return solvePuzzle(puzzleArray, row, col + 1);
-        
-            for (int num = 1; num <= 9; num++)
-            {
+            }
+            for (int num = 1; num <= 9; num++){
                 puzzleArray[row][col] = num;
                 // check if current guess, passess validation
                 if (validatePuzzle(puzzleArray))
                 {
-                    // use the guess at curent elemnt and recursively solve with next element
+                    // use the guess at curent element and recursively solve with next element
                     if (solvePuzzle(puzzleArray, row, col + 1))
                         return true;
                 }
