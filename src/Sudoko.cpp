@@ -100,7 +100,8 @@ int main()
             puzzle newPuzzle(choice);                       // create a puzzle object from input
             puzzle *ptr = &newPuzzle;                       // create pointer to object   
             srand((unsigned) time(0));
-            int randomNumber;
+            int randomNumber1;
+            int randomNumber2;
             vector<int>usedRandomNums;
 
             // Set all Sudoko Puzzle values to 0
@@ -112,23 +113,19 @@ int main()
             // Fill the 3 diagonal 3x3 boxes of the puzzle randomly
             for(int iBox = 0; iBox < puzzleDim; iBox += 3){
                 for(int jBox = 0; jBox < puzzleDim; jBox += 3){
-                    cout << "New Box with iBox: " << iBox << " and jBox: " << jBox << endl;
-                    for(int i = iBox; i < iBox + 3; i++){
-                        for(int j = jBox; j < jBox + 3; j++){
-                            if (iBox == jBox){
-                                randomNumber = (rand() % 9) + 1;
-                                while(contains(usedRandomNums,randomNumber)){
-                                    randomNumber = (rand() % 9) + 1;
+                    if (iBox == jBox){
+                        for(int i = iBox; i < iBox + 3; i++){
+                            for(int j = jBox; j < jBox + 3; j++){
+                                randomNumber1 = (rand() % 9) + 1;
+                                while(contains(usedRandomNums,randomNumber1)){
+                                    randomNumber1 = (rand() % 9) + 1;
                                 }
-                                (ptr->numMatrix)[i][j] = randomNumber;
-                                usedRandomNums.push_back(randomNumber);
+                                (ptr->numMatrix)[i][j] = randomNumber1;
+                                usedRandomNums.push_back(randomNumber1);
                             }
-                            cout << (ptr->numMatrix)[i][j] << " ";
                         }
-                        cout << endl;  
                     }
                     usedRandomNums.clear();
-                    cout << "\n\n";
                 }
             }
             newPuzzle.printPuzzle(ptr->numMatrix);
@@ -141,28 +138,36 @@ int main()
             newPuzzle.printPuzzle(ptr->numMatrix);
 
             // Remove number of elements according to user's difficulty preference
+            // CHANGE TO 1: EASY, 2: MEDIUM, 3: HARD. IN OTHER WORDS difficulty == 1,2,3
             cout << "\nSelect the difficulty of your Sudoko Puzzle by number:" << endl
                  << "15: EASY" << endl
                  << "30: MEDIUM" << endl
-                 << "45: HARD" << endl;
-            // NEED SOMETHING TO STOP THIS LOOP
+                 << "45: HARD\n" << endl;
+            // Obtain user's difficulty preference
             while(true){
                 cin >> difficulty;
-                switch (difficulty){
-                case EASY:
-                    cout << "you chose easy" << endl;
+                if (difficulty == EASY || difficulty == MEDIUM || difficulty == HARD){
                     break;
-                case MEDIUM:
-                    cout << "you chose medium" << endl;
-                    break;
-                case HARD:
-                    cout << "you chose hard" << endl;
-                    break;
-                default:
-                    cout << "Invalid selection. Try again" << endl;
-                    continue;
                 }
-            }    
+                cout << "\nInvalid input. Try again" << endl;
+            }
+            // Change puzzle according to difficulty preference
+            while(difficulty){
+                randomNumber1 = rand() % 9;
+                randomNumber2 = rand() % 9;
+                if ((ptr->numMatrix)[randomNumber1][randomNumber2] != 0){
+                    (ptr->numMatrix)[randomNumber1][randomNumber2] = 0;
+                    difficulty -= 1;
+                }
+            }
+            // Print the unsovled puzzle
+            cout << "\nThe unsolved puzzle is: " << endl;
+            newPuzzle.printPuzzle(ptr->numMatrix);
+
+            // Save the unsolved puzzle
+            cout << "\n";
+            newPuzzle.fileSave(ptr->numMatrix);
+
         } else if (choice == "exit"){
             cout << "Exiting...\n";
             break;

@@ -14,7 +14,6 @@ class puzzle{
         int validity;                                       // -1 if the puzzle contains an invalid value 
                                                             // 0 if the puzzle contains repeated values
                                                             // 1 if the puzzle is valid
-        enum difficultyEnum{EASY = 15, mid = 30, hard = 45};
         
         puzzle(string choice){   // constructor that executes at object creation
             cout << "\nPuzzle object created.\n" << endl;
@@ -159,24 +158,24 @@ class puzzle{
         // Function that solves the puzzle
         inline bool solvePuzzle(int (&puzzleArray)[puzzleDim][puzzleDim], int row, int col){
             // If we are indexed at the end, return true, no more backtracking needed
-            if (row == puzzleDim - 1 && col == puzzleDim){
+            if (row == puzzleDim - 1 && col == puzzleDim)
                 return true;
-            }
             // If we are indexed at the end of a row, then increment row, restart col
-            if (col == puzzleDim){
+            if (col == puzzleDim) {
                 row++;
                 col = 0;
             }
             // if nonzero element at index, recursively solve with next element. No need to fill
-            if (puzzleArray[row][col] > 0) {
+            if (puzzleArray[row][col] > 0)
                 return solvePuzzle(puzzleArray, row, col + 1);
-            }
-            for (int num = 1; num <= 9; num++){
+        
+            for (int num = 1; num <= 9; num++)
+            {
                 puzzleArray[row][col] = num;
                 // check if current guess, passess validation
                 if (validatePuzzle(puzzleArray))
                 {
-                    // use the guess at curent element and recursively solve with next element
+                    // use the guess at curent elemnt and recursively solve with next element
                     if (solvePuzzle(puzzleArray, row, col + 1))
                         return true;
                 }
